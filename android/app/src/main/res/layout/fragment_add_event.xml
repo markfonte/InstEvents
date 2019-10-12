@@ -4,6 +4,8 @@
 
     <data>
 
+        <import type="android.view.View" />
+
         <variable
             name="viewModel"
             type="example.com.eventmap.ui.AddEventViewModel" />
@@ -23,6 +25,8 @@
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_margin="8dp"
+                android:visibility="@{viewModel.pickerLoading ? View.GONE : View.VISIBLE}"
+
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -57,6 +61,7 @@
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/enter_event_title"
                             android:layout_width="match_parent"
+                            android:inputType="textCapWords"
                             android:layout_height="match_parent"
                             android:hint="What is your event called?" />
                     </com.google.android.material.textfield.TextInputLayout>
@@ -74,6 +79,8 @@
                             android:id="@+id/enter_event_description"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
+                            android:inputType="textMultiLine"
+                            android:lines="2"
                             android:hint="Enter a brief description" />
                     </com.google.android.material.textfield.TextInputLayout>
 
@@ -125,7 +132,9 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:hint="Start Time"
-                            android:inputType="time" />
+                            android:inputType="time"
+                            android:clickable="true"
+                            android:focusable="true" />
 
                     </com.google.android.material.textfield.TextInputLayout>
 
@@ -162,9 +171,21 @@
                             android:hint="Where is your event being held?" />
                     </com.google.android.material.textfield.TextInputLayout>
 
+
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
             </androidx.cardview.widget.CardView>
+
+
+            <ProgressBar
+                android:id="@+id/picker_progress_bar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="@{viewModel.pickerLoading ? View.VISIBLE : View.GONE}"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
