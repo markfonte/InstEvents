@@ -9,7 +9,6 @@ class FirebaseService {
     private var storage = FirebaseStorage.getInstance()
 
 
-
     companion object {
         private val LOG_TAG: String = FirebaseService::class.java.name
 

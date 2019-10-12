@@ -2,6 +2,8 @@ package example.com.eventmap.data
 
 class MainRepository {
     private var firebaseService: FirebaseService = FirebaseService.getInstance()
+    private var volleyService: VolleyService = VolleyService.getInstance()
+
 
 
     companion object {

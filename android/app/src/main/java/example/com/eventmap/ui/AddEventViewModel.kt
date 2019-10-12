@@ -65,7 +65,7 @@ class AddEventViewModel(private val mainRepository: MainRepository) : ViewModel(
         }
         endDate += endMinute
 
-        
+
     }
     init {
         isPickerLoading.value = false
