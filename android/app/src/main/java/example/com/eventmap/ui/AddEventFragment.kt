@@ -193,7 +193,7 @@ class AddEventFragment : Fragment() {
             }
         }
         enter_event_submit.setOnClickListener{
-            vm.addEvent()
+            vm.addEvent(enter_event_title.text.toString(), enter_event_description.text.toString(), enter_event_location.text.toString())
         }
     }
 }

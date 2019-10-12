@@ -19,7 +19,7 @@ class AddEventViewModel(private val mainRepository: MainRepository) : ViewModel(
     var endMonth: Int = 0
     var endDay: Int = 0
 
-    fun addEvent() {
+    fun addEvent(title: String, description: String, location: String) : MutableLiveData<Boolean>{
         var startDate = ""
         var endDate = ""
         startDate += startYear
@@ -65,6 +65,7 @@ class AddEventViewModel(private val mainRepository: MainRepository) : ViewModel(
         }
         endDate += endMinute
 
+        return mainRepository.addEvent(title, description, startDate, endDate, location)
 
     }
     init {
