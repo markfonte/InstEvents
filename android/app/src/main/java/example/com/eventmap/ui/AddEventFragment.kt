@@ -47,8 +47,8 @@ class AddEventFragment : Fragment() {
             context,
             TimePickerDialog.OnTimeSetListener { _, hourOfDay, minutes ->
                 run {
-                    vm.endTimeHour = hourOfDay
-                    vm.endTimeMinute = minutes
+                    vm.startHour = hourOfDay
+                    vm.startMinute = minutes
                     var hourOutput: String = hourOfDay.toString()
                     var minuteOutput: String = minutes.toString()
 
@@ -81,8 +81,8 @@ class AddEventFragment : Fragment() {
             context,
             TimePickerDialog.OnTimeSetListener { _, hourOfDay, minutes ->
                 run {
-                    vm.endTimeHour = hourOfDay
-                    vm.endTimeMinute = minutes
+                    vm.endHour = hourOfDay
+                    vm.endMinute = minutes
                     var hourOutput: String = hourOfDay.toString()
                     var minuteOutput: String = minutes.toString()
 
@@ -113,9 +113,12 @@ class AddEventFragment : Fragment() {
         vm.isPickerLoading.value = true
         val datePickerDialog = DatePickerDialog(
             context!!,
-            DatePickerDialog.OnDateSetListener { datePicker, year, day, month ->
+            DatePickerDialog.OnDateSetListener { datePicker, year, month, day ->
                 run {
-                    enter_event_start_date.setText("${day + 1}/$month/$year")
+                    vm.startYear = year
+                    vm.startMonth = month + 1
+                    vm.startDay = day
+                    enter_event_start_date.setText("${month + 1}/$day/$year")
 
                 }
             },
@@ -133,9 +136,12 @@ class AddEventFragment : Fragment() {
         vm.isPickerLoading.value = true
         val datePickerDialog = DatePickerDialog(
             context!!,
-            DatePickerDialog.OnDateSetListener { datePicker, year, day, month ->
+            DatePickerDialog.OnDateSetListener { datePicker, year, month, day ->
                 run {
-                    enter_event_end_date.setText("${day + 1}/$month/$year")
+                    vm.endYear = year
+                    vm.endMonth = month + 1
+                    vm.endDay = day
+                    enter_event_end_date.setText("${month + 1}/$day/$year")
 
                 }
             },
@@ -185,6 +191,9 @@ class AddEventFragment : Fragment() {
             if (hasFocus) {
                 showEndDateDialog()
             }
+        }
+        enter_event_submit.setOnClickListener{
+            vm.addEvent()
         }
     }
 }
