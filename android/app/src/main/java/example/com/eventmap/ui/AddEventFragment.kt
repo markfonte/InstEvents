@@ -10,10 +10,15 @@ import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.Navigation
+import com.google.android.material.snackbar.Snackbar
+import example.com.eventmap.MapsActivity
 import example.com.eventmap.R
 import example.com.eventmap.databinding.FragmentAddEventBinding
 import example.com.eventmap.util.InjectorUtils
+import kotlinx.android.synthetic.main.activity_maps.*
 import kotlinx.android.synthetic.main.fragment_add_event.*
 
 
@@ -193,7 +198,12 @@ class AddEventFragment : Fragment() {
             }
         }
         enter_event_submit.setOnClickListener{
-            vm.addEvent(enter_event_title.text.toString(), enter_event_description.text.toString(), enter_event_location.text.toString())
+            vm.addEvent(enter_event_title.text.toString(), enter_event_description.text.toString(), enter_event_location.text.toString()).observe(this, Observer {
+                if (it) {
+                    Snackbar.make(app_container, "Event created! Check it out on the map or in Browse.", Snackbar.LENGTH_LONG).show()
+                    Navigation.findNavController(getView()!!).navigate(R.id.action_addEventFragment_to_supportMapsFragment, null)
+                }
+            })
         }
     }
 }

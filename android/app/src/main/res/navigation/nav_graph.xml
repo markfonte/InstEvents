@@ -11,7 +11,11 @@
     <fragment
         android:id="@+id/addEventFragment"
         android:name="example.com.eventmap.ui.AddEventFragment"
-        android:label="AddEventFragment" />
+        android:label="AddEventFragment" >
+        <action
+            android:id="@+id/action_addEventFragment_to_supportMapsFragment"
+            app:destination="@id/supportMapsFragment" />
+    </fragment>
     <fragment
         android:id="@+id/browseEventsFragment"
         android:name="example.com.eventmap.ui.BrowseEventsFragment"
