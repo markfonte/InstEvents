@@ -6,5 +6,6 @@
     <content url="file://$MODULE_DIR$/functions/node_modules/@google-cloud" />
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="@types/jest" level="application" />
   </component>
 </module>
