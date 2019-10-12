@@ -8,4 +8,8 @@
         android:id="@+id/supportMapsFragment"
         android:name="example.com.eventmap.ui.SupportMapsFragment"
         android:label="SupportMapsFragment" />
+    <fragment
+        android:id="@+id/addEventFragment"
+        android:name="example.com.eventmap.ui.AddEventFragment"
+        android:label="AddEventFragment" />
 </navigation>
