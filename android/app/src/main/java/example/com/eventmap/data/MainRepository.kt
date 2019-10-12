@@ -7,7 +7,7 @@ class MainRepository {
     private var volleyService: VolleyService = VolleyService.getInstance()
 
     fun addEvent(title: String, description: String, startDate: String, endDate:String, location: String) : MutableLiveData<Boolean> {
-        return MutableLiveData()
+        return firebaseService.addEvent(title, description, startDate, endDate, location)
     }
 
     companion object {

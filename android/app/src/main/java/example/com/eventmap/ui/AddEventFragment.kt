@@ -198,10 +198,10 @@ class AddEventFragment : Fragment() {
             }
         }
         enter_event_submit.setOnClickListener{
-            vm.addEvent(enter_event_title.text.toString(), enter_event_description.text.toString(), enter_event_location.text.toString()).observe(this, Observer {
-                if (it) {
-                    Snackbar.make(app_container, "Event created! Check it out on the map or in Browse.", Snackbar.LENGTH_LONG).show()
-                    Navigation.findNavController(getView()!!).navigate(R.id.action_addEventFragment_to_supportMapsFragment, null)
+            vm.addEvent(enter_event_title.text.toString(), enter_event_description.text.toString(), enter_event_location.text.toString()).observe(this, Observer { success ->
+                if (success) {
+                    main_nav_host_fragment.view?.let { it1 -> Snackbar.make(it1, "Event created! Check it out on the map or in Browse.", Snackbar.LENGTH_LONG).show() }
+                    (activity as MapsActivity).navController.navigate(R.id.action_addEventFragment_to_supportMapsFragment, null)
                 }
             })
         }
