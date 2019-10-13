@@ -18,6 +18,10 @@ class MainRepository {
         return volleyService.addEvent(title, description, startDate, endDate, location, context)
     }
 
+    fun getTodaysEvents(context: Context) : MutableLiveData<ArrayList<HashMap<String, String>>> {
+        return volleyService.getTodaysEvents(context)
+    }
+
     companion object {
 
         // For Singleton instantiation
