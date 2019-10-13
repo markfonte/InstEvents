@@ -52,10 +52,6 @@ class BrowseEventsRecyclerAdapter(private val eventInfos: ArrayList<EventInfo>, 
             Glide.with(activity)
                 .load(eventInfos[position].ImageURL)
                 .into(holder.image)
-        } else {
-            Glide.with(activity)
-                .load("https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png")
-                .into(holder.image)
         }
         holder.rowContainer.setOnClickListener {
             // TODO: Do something if event is clicked
