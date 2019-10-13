@@ -3,13 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginStart="4dp"
-    android:layout_marginTop="8dp"
-    android:layout_marginEnd="4dp"
-    android:layout_marginBottom="8dp"
+    android:layout_marginTop="20dp"
+    android:layout_marginBottom="20dp"
     android:background="?android:attr/selectableItemBackground"
     android:clickable="true"
-    android:elevation="12dp"
+    app:cardUseCompatPadding="true"
+    app:cardElevation="16dp"
     android:focusable="true">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -18,8 +17,7 @@
         android:layout_height="wrap_content"
         android:background="?android:attr/selectableItemBackground"
         android:clickable="true"
-        android:focusable="true"
-        android:paddingBottom="8dp">
+        android:focusable="true">
 
         <TextView
             android:id="@+id/event_title"
@@ -67,13 +65,11 @@
 
         <ImageView
             android:id="@+id/event_image"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
             android:adjustViewBounds="true"
-            android:maxWidth="160dp"
-            android:maxHeight="160dp"
-            android:scaleType="centerCrop"
+            android:maxHeight="300dp"
             android:visibility="visible"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
