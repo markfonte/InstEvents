@@ -4,13 +4,16 @@ import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import example.com.eventmap.MapsActivity
 import example.com.eventmap.R
 import example.com.eventmap.util.EventInfo
 
-class BrowseEventsRecyclerAdapter(private val eventInfos: ArrayList<EventInfo>) :
+class BrowseEventsRecyclerAdapter(private val eventInfos: ArrayList<EventInfo>, private val activity: MapsActivity) :
     RecyclerView.Adapter<BrowseEventsRecyclerAdapter.ViewHolder>() {
 
     class ViewHolder(v: View) : RecyclerView.ViewHolder(v) {
@@ -18,6 +21,7 @@ class BrowseEventsRecyclerAdapter(private val eventInfos: ArrayList<EventInfo>) 
         val description: TextView = v.findViewById(R.id.event_description)
         val location: TextView = v.findViewById(R.id.event_location)
         val dates: TextView = v.findViewById(R.id.event_dates)
+        val image: ImageView = v.findViewById(R.id.event_image)
         val rowContainer: ConstraintLayout = v.findViewById(R.id.event_row_container)
     }
 
@@ -43,6 +47,10 @@ class BrowseEventsRecyclerAdapter(private val eventInfos: ArrayList<EventInfo>) 
         holder.description.text = eventInfos[position].Description
         holder.location.text = eventInfos[position].Location
         holder.dates.text = eventInfos[position].StartDate +  " - "  + eventInfos[position].EndDate
+        //TODO: throw Firebase image in Image
+        Glide.with(activity)
+            .load("https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png")
+            .into(holder.image)
         holder.rowContainer.setOnClickListener {
             // TODO: Do something if event is clicked
         }

@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
+import example.com.eventmap.MapsActivity
 import example.com.eventmap.R
 import example.com.eventmap.adapter.BrowseEventsRecyclerAdapter
 import example.com.eventmap.databinding.FragmentBrowseEventsBinding
@@ -61,7 +62,7 @@ class BrowseEventsFragment : Fragment() {
                 eventInfos.add(curEventInfo)
             }
             browse_events_recycler.layoutManager = LinearLayoutManager(activity)
-            browse_events_recycler.adapter = BrowseEventsRecyclerAdapter(eventInfos)
+            browse_events_recycler.adapter = BrowseEventsRecyclerAdapter(eventInfos, activity = (activity as MapsActivity))
 
             // set up recyclerview
         })
