@@ -77,7 +77,7 @@ class AddEventFragment : Fragment() {
                     enter_event_start_time.setText("$hourOutput:$minuteOutput $suffix")
                 }
             },
-            0,
+            12,
             0,
             false
         )
@@ -111,7 +111,7 @@ class AddEventFragment : Fragment() {
                     enter_event_end_time.setText("$hourOutput:$minuteOutput $suffix")
                 }
             },
-            0,
+            12,
             0,
             false
         )

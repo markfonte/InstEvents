@@ -10,6 +10,10 @@ import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import org.json.JSONObject
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
+import kotlin.collections.HashMap
 
 
 class VolleyService {
@@ -64,8 +68,9 @@ class VolleyService {
         val result: MutableLiveData<ArrayList<HashMap<String, String>>> = MutableLiveData()
 
         val queue = Volley.newRequestQueue(context)
-        val startDate = "2019-10-15-00-00"
-        val endDate = "2019-10-17-23-59"
+        val sdf = SimpleDateFormat("yyyy-MM-dd-HH-mm", Locale.getDefault())
+        val startDate = sdf.format(Date())
+        val endDate = startDate.substring(0, 10) + "-23-59"
 
         val addEventUrl =
             "https://us-central1-infinite-chain-255705.cloudfunctions.net/api/events?start_date=$startDate&end_date=$endDate"
