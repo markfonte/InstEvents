@@ -4,6 +4,7 @@ import example.com.eventmap.MapsActivityViewModelFactory
 import example.com.eventmap.data.MainRepository
 import example.com.eventmap.ui.AddEventViewModelFactory
 import example.com.eventmap.ui.BrowseEventsViewModelFactory
+import example.com.eventmap.ui.SupportMapsViewModelFactory
 
 object InjectorUtils {
 
@@ -24,5 +25,10 @@ object InjectorUtils {
     fun provideBrowseEventsViewModelFactory(): BrowseEventsViewModelFactory {
         val repository: MainRepository = getMainRepositorySingleton()
         return BrowseEventsViewModelFactory(repository)
+    }
+
+    fun provideSupportMapsViewModelFactory(): SupportMapsViewModelFactory {
+        val repository: MainRepository = getMainRepositorySingleton()
+        return SupportMapsViewModelFactory(repository)
     }
 }

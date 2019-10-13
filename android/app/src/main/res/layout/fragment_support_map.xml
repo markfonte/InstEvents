@@ -2,7 +2,12 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <data />
+    <data>
+
+        <variable
+            name="viewModel"
+            type="example.com.eventmap.ui.SupportMapsViewModel" />
+    </data>
 
     <FrameLayout
         android:id="@+id/container"

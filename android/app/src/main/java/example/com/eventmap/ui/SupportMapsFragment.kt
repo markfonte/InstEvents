@@ -4,6 +4,7 @@ import android.Manifest
 import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,6 +12,8 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -20,23 +23,30 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import example.com.eventmap.R
 import example.com.eventmap.databinding.FragmentSupportMapBinding
+import example.com.eventmap.util.InjectorUtils
 
 class SupportMapsFragment : Fragment(), OnMapReadyCallback {
 
     private lateinit var mMap: GoogleMap
     private lateinit var fusedLocationClient: FusedLocationProviderClient
+    private lateinit var vm: SupportMapsViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
+        val factory: SupportMapsViewModelFactory =
+            InjectorUtils.provideSupportMapsViewModelFactory()
+        vm = ViewModelProviders.of(this, factory).get(SupportMapsViewModel::class.java)
         val binding: FragmentSupportMapBinding = DataBindingUtil.inflate<FragmentSupportMapBinding>(
             inflater,
             R.layout.fragment_support_map,
             container,
             false
         ).apply {
+            viewModel = vm
             lifecycleOwner = this@SupportMapsFragment
         }
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(activity!!)
@@ -62,6 +72,11 @@ class SupportMapsFragment : Fragment(), OnMapReadyCallback {
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
 
+        vm.getTodaysEvents(context!!).observe(this, Observer { response ->
+            for (i in response) {
+                Log.d("", i["location"])
+            }
+        })
         // Add a marker in Sydney and move the camera
 
 
