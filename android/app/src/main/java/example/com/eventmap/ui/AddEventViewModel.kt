@@ -1,6 +1,8 @@
 package example.com.eventmap.ui
 
 import android.content.Context
+import android.graphics.Bitmap
+import android.net.Uri
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import example.com.eventmap.data.MainRepository
@@ -18,6 +20,7 @@ class AddEventViewModel(private val mainRepository: MainRepository) : ViewModel(
     var endYear: Int = 0
     var endMonth: Int = 0
     var endDay: Int = 0
+    var image: Bitmap? = null
 
     fun addEvent(
         title: String,

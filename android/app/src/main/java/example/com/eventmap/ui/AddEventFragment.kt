@@ -12,7 +12,6 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import androidx.navigation.Navigation
 import com.google.android.material.snackbar.Snackbar
 import example.com.eventmap.MapsActivity
 import example.com.eventmap.R
@@ -20,9 +19,26 @@ import example.com.eventmap.databinding.FragmentAddEventBinding
 import example.com.eventmap.util.InjectorUtils
 import kotlinx.android.synthetic.main.activity_maps.*
 import kotlinx.android.synthetic.main.fragment_add_event.*
+import android.app.Activity
+import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.provider.MediaStore
+import android.util.Log
+import example.com.eventmap.data.FirebaseStorageService
+import java.io.ByteArrayOutputStream
+import androidx.core.app.ActivityCompat.startActivityForResult
+import example.com.eventmap.R.id
 
 
 class AddEventFragment : Fragment() {
+
+    companion object {
+        private final val PICK_IMAGE = 1
+        private final val LOG_TAG = "AddEventFragment"
+    }
+
+    private val firebaseStorage: FirebaseStorageService = FirebaseStorageService.getInstance()
 
     private lateinit var vm: AddEventViewModel
 
@@ -160,6 +176,63 @@ class AddEventFragment : Fragment() {
         datePickerDialog.show()
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == PICK_IMAGE && resultCode == Activity.RESULT_OK) {
+            if (data == null) {
+                Log.e(LOG_TAG, "Unable to select photo, returned data is null")
+                return
+            }
+            val uri = data.data
+            val bitmap = MediaStore.Images.Media.getBitmap(this.activity?.contentResolver, uri)
+            new_event_image.setImageBitmap(bitmap)
+            vm.image = bitmap
+        }
+    }
+
+    private fun pickImage() {
+        val getIntent = Intent(Intent.ACTION_PICK)
+        getIntent.type = "image/*"
+
+        val chooserIntent = Intent.createChooser(getIntent, "Choose image using")
+
+        startActivityForResult(chooserIntent, PICK_IMAGE)
+    }
+
+    private fun submit() {
+        if(vm.image != null) {
+            firebaseStorage.uploadImage(vm.image!!).addOnSuccessListener {
+                sendData()
+            }.addOnFailureListener {
+                Log.e(LOG_TAG, "Unable to upload image!")
+            }
+        } else {
+            sendData()
+        }
+    }
+
+    private fun sendData() {
+        vm.addEvent(
+            enter_event_title.text.toString(),
+            enter_event_description.text.toString(),
+            enter_event_location.text.toString(),
+            context!!
+        ).observe(this, Observer { success ->
+            if (success) {
+                main_nav_host_fragment.view?.let { it1 ->
+                    Snackbar.make(
+                        it1,
+                        "Event created! Check it out on the map or in Browse.",
+                        Snackbar.LENGTH_LONG
+                    ).show()
+                }
+                (activity as MapsActivity).navController.navigate(
+                    R.id.action_addEventFragment_to_supportMapsFragment,
+                    null
+                )
+            }
+        })
+    }
 
     @RequiresApi(Build.VERSION_CODES.N)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -197,13 +270,12 @@ class AddEventFragment : Fragment() {
                 showEndDateDialog()
             }
         }
-        enter_event_submit.setOnClickListener{
-            vm.addEvent(enter_event_title.text.toString(), enter_event_description.text.toString(), enter_event_location.text.toString(), context!!).observe(this, Observer { success ->
-                if (success) {
-                    main_nav_host_fragment.view?.let { it1 -> Snackbar.make(it1, "Event created! Check it out on the map or in Browse.", Snackbar.LENGTH_LONG).show() }
-                    (activity as MapsActivity).navController.navigate(R.id.action_addEventFragment_to_supportMapsFragment, null)
-                }
-            })
+        enter_event_submit.setOnClickListener {
+            submit()
+        }
+
+        enter_event_choose_picture.setOnClickListener {
+            pickImage()
         }
     }
 }
