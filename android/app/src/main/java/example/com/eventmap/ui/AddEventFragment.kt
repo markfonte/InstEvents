@@ -205,11 +205,12 @@ class AddEventFragment : Fragment() {
     private fun submit() {
         if (vm.image != null) {
             val imageName = UUID.randomUUID().toString() + ".png"
-            val path = "event-images/$imageName"
-            firebaseStorage.uploadImage(path, vm.image!!).addOnSuccessListener { snapshot ->
-                vm.imageName = snapshot.storage.downloadUrl.toString()
-                sendData()
-
+            val ref = firebaseStorage.getStorageRef("event-images/$imageName")
+            firebaseStorage.uploadImage(ref, vm.image!!).addOnSuccessListener {
+                ref.downloadUrl.addOnSuccessListener { uri ->
+                    vm.imageName = uri.toString()
+                    sendData()
+                }
             }.addOnFailureListener {
                 Log.e(LOG_TAG, "Unable to upload image!")
             }

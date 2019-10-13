@@ -2,6 +2,7 @@ package example.com.eventmap.data
 
 import android.graphics.Bitmap
 import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.UploadTask
 import java.io.ByteArrayOutputStream
 import java.util.*
@@ -23,14 +24,18 @@ class FirebaseStorageService {
     private val storage = FirebaseStorage.getInstance()
     private val storageRef = storage.reference
 
-    fun uploadImage(path: String, data: ByteArray): UploadTask {
-        return storageRef.child(path).putBytes(data)
+    fun getStorageRef(path: String): StorageReference {
+        return storageRef.child(path);
     }
 
-    fun uploadImage(path: String, bitmap: Bitmap): UploadTask {
+    fun uploadImage(ref: StorageReference, data: ByteArray): UploadTask {
+        return ref.putBytes(data)
+    }
+
+    fun uploadImage(ref: StorageReference, bitmap: Bitmap): UploadTask {
         val baos = ByteArrayOutputStream()
         bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos)
         val data = baos.toByteArray()
-        return uploadImage(path, data)
+        return uploadImage(ref, data)
     }
 }
