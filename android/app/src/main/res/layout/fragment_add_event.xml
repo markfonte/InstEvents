@@ -172,13 +172,23 @@
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <Button
-                        android:id="@+id/enter_event_submit"
-                        android:layout_width="wrap_content"
+                        android:id="@+id/enter_event_choose_picture"
+                        android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
-                        android:text="Submit"
+                        android:text="Choose Picture"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/enter_event_location_wrapper" />
+
+                    <Button
+                        android:id="@+id/enter_event_submit"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Submit"
+                        android:layout_marginTop="20dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/enter_event_choose_picture" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
