@@ -6,21 +6,23 @@ const db = require('../db');
 const parseDate = require('../util/parseDate');
 
 app.use(cors({ origin: true }));
+app.use(express.json());
 
 app.get('/events', async (req, res) => {
-  let query = db.collection('events');
+  const events = db.collection('events');
   try {
-    if (req.query.start_date) {
-      query = query.where('date', '>', parseDate(req.query.start_date));
-    }
-    if (req.query.end_date) {
-      query = query.where('date', '<', parseDate(req.query.end_date));
-    }
     const eventsResults = {};
-    const snapshot = await query.get();
+    const snapshot = await events.get();
+    const startDate = req.query.start_date;
+    const endDate = req.query.end_date;
     snapshot.forEach(doc => {
       let data = doc.data();
-      data.date = data.date.toDate();
+      data.start_date = data.start_date && data.start_date.toDate && data.start_date.toDate();
+      data.end_date = data.end_date && data.end_date.toDate && data.end_date.toDate();
+      // filter events that are not occurring during this time frame
+      if(startDate && endDate && (data.start_date > parseDate(endDate) || data.end_date < parseDate(startDate))) {
+        return;
+      }
       eventsResults[doc.id] = data;
     });
     res.send(eventsResults);
@@ -29,8 +31,15 @@ app.get('/events', async (req, res) => {
   }
 });
 
-app.get('/hello', (req, res) => {
-  res.end("Received GET request!");
+app.post('/events', async (req, res) => {
+  const events = db.collection('events');
+  const postData = req.body;
+  const event = await events.add({
+    ...postData,
+    start_date: parseDate(postData.start_date),
+    end_date: parseDate(postData.end_date),
+  });
+  res.send(event.id);
 });
 
 exports.handler = functions.https.onRequest(app);

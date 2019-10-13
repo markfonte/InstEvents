@@ -1,4 +1,7 @@
 module.exports = function parseDate(dateString) {
+  if(!dateString) {
+    throw new Error('Date is blank');
+  }
   const parts = dateString.split('-').filter(value => value !== "");
   if(parts.length < 5) {
     throw new Error('Improperly formatted date. Must be formatted as YYYY-MM-DD-HH-MM.');
