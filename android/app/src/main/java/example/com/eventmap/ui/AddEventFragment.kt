@@ -241,7 +241,8 @@ class AddEventFragment : Fragment() {
                     enter_event_location.text.toString(),
                     context!!,
                     lat,
-                    lng
+                    lng,
+                    ""
                 ).observe(this, Observer { success ->
                     if (success) {
                         main_nav_host_fragment.view?.let { it1 ->

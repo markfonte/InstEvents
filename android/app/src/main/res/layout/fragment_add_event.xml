@@ -23,10 +23,9 @@
 
             <androidx.cardview.widget.CardView
                 android:layout_width="0dp"
-                android:layout_height="0dp"
+                android:layout_height="match_parent"
                 android:layout_margin="8dp"
                 android:visibility="@{viewModel.pickerLoading ? View.GONE : View.VISIBLE}"
-
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -34,7 +33,7 @@
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="wrap_content">
 
                     <TextView
                         android:id="@+id/new_event_title"
@@ -42,31 +41,11 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="16dp"
                         android:gravity="center"
-                        android:text="Add A New Event"
-                        android:textSize="24sp"
-                        android:textStyle="bold"
+                        android:text="Create Event"
+                        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
-
-                    <ImageView
-                        android:id="@+id/new_event_image"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:maxHeight="200dp"
-                        android:scaleType="centerCrop"
-                        android:adjustViewBounds="true"
-                        app:layout_constraintTop_toBottomOf="@id/new_event_title"
-                        />
-
-                    <Button
-                        android:id="@+id/enter_event_choose_picture"
-                        android:layout_width="fill_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Choose Picture"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/new_event_image" />
 
 
                     <com.google.android.material.textfield.TextInputLayout
@@ -76,13 +55,13 @@
                         android:layout_margin="8dp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/enter_event_choose_picture">
+                        app:layout_constraintTop_toBottomOf="@id/new_event_title">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/enter_event_title"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:hint="What is your event called?"
+                            android:hint="Event Name"
                             android:inputType="textCapWords" />
                     </com.google.android.material.textfield.TextInputLayout>
 
@@ -99,56 +78,71 @@
                             android:id="@+id/enter_event_description"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:hint="Enter a brief description"
+                            android:hint="Description"
                             android:inputType="textMultiLine"
                             android:lines="2" />
                     </com.google.android.material.textfield.TextInputLayout>
 
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/enter_event_start_date_wrapper"
+                    <LinearLayout
+                        android:id="@+id/start_datetime_wrapper"
+                        android:orientation="horizontal"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_margin="8dp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/enter_event_description_wrapper">
+                        app:layout_constraintTop_toBottomOf="@id/enter_event_description_wrapper"
+                        android:baselineAligned="false">
 
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/enter_event_start_date"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:hint="Start Date"
-                            android:inputType="time" />
-                    </com.google.android.material.textfield.TextInputLayout>
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/enter_event_start_date_wrapper"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="8dp"
+                            android:layout_weight="1">
 
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/enter_event_start_time_wrapper"
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/enter_event_start_date"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:hint="Start Date"
+                                android:inputType="time" />
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/enter_event_start_time_wrapper"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_margin="8dp">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/enter_event_start_time"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:clickable="true"
+                                android:focusable="true"
+                                android:hint="Start Time"
+                                android:inputType="time" />
+
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/end_datetime_wrapper"
+                        android:orientation="horizontal"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_margin="8dp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/enter_event_start_date_wrapper">
-
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/enter_event_start_time"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:clickable="true"
-                            android:focusable="true"
-                            android:hint="Start Time"
-                            android:inputType="time" />
-
-                    </com.google.android.material.textfield.TextInputLayout>
-
+                        app:layout_constraintTop_toBottomOf="@id/start_datetime_wrapper"
+                        android:baselineAligned="false">
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/enter_event_end_date_wrapper"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_margin="8dp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/enter_event_start_time_wrapper">
+                        android:layout_weight="1" >
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/enter_event_end_date"
@@ -163,9 +157,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_margin="8dp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/enter_event_end_date_wrapper">
+                        android:layout_weight="1">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/enter_event_end_time"
@@ -175,6 +167,7 @@
                             android:inputType="date" />
                     </com.google.android.material.textfield.TextInputLayout>
 
+                    </LinearLayout>
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/enter_event_location_wrapper"
                         android:layout_width="0dp"
@@ -182,24 +175,56 @@
                         android:layout_margin="8dp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/enter_event_end_time_wrapper">
+                        app:layout_constraintTop_toBottomOf="@id/end_datetime_wrapper">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/enter_event_location"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:hint="Where is your event being held?" />
+                            android:hint="Location" />
                     </com.google.android.material.textfield.TextInputLayout>
 
-                    <Button
-                        android:id="@+id/enter_event_submit"
-                        android:layout_width="fill_parent"
+                    <ImageView
+                        android:id="@+id/new_event_image"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:text="Submit"
-                        android:layout_marginTop="20dp"
+                        android:layout_margin="8dp"
+                        android:adjustViewBounds="true"
+                        android:maxHeight="200dp"
+                        android:maxWidth="200dp"
+                        android:scaleType="centerCrop"
+                        android:visibility="visible"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/enter_event_location_wrapper"/>
+
+                    <Button
+                        android:id="@+id/enter_event_choose_picture"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="Choose Picture"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/enter_event_location_wrapper" />
+                        app:layout_constraintTop_toBottomOf="@+id/new_event_image" />
+
+                    <Button
+
+                        android:id="@+id/enter_event_submit"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:text="Submit"
+                        android:textColor="@android:color/white"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        android:backgroundTint="@color/colorPrimary"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/enter_event_choose_picture" />
+
+                    <LinearLayout
+                        app:layout_constraintTop_toBottomOf="@id/enter_event_submit"
+                        android:layout_width="match_parent"
+                        android:layout_height="300dp"/>
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
