@@ -8,10 +8,13 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.LinearLayoutManager
 import example.com.eventmap.R
+import example.com.eventmap.adapter.BrowseEventsRecyclerAdapter
 import example.com.eventmap.databinding.FragmentBrowseEventsBinding
 import example.com.eventmap.util.EventInfo
 import example.com.eventmap.util.InjectorUtils
+import kotlinx.android.synthetic.main.fragment_browse_events.*
 
 class BrowseEventsFragment : Fragment() {
 
@@ -57,6 +60,8 @@ class BrowseEventsFragment : Fragment() {
                 curEventInfo.Longitude = event["longitude"]
                 eventInfos.add(curEventInfo)
             }
+            browse_events_recycler.layoutManager = LinearLayoutManager(activity)
+            browse_events_recycler.adapter = BrowseEventsRecyclerAdapter(eventInfos)
 
             // set up recyclerview
         })
