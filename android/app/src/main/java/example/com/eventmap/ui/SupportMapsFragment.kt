@@ -4,7 +4,6 @@ import android.Manifest
 import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,10 +13,6 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import com.android.volley.Request
-import com.android.volley.Response
-import com.android.volley.toolbox.JsonObjectRequest
-import com.android.volley.toolbox.Volley
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -29,9 +24,6 @@ import com.google.android.gms.maps.model.MarkerOptions
 import example.com.eventmap.R
 import example.com.eventmap.databinding.FragmentSupportMapBinding
 import example.com.eventmap.util.InjectorUtils
-import org.json.JSONArray
-import org.json.JSONObject
-import java.net.URLEncoder
 
 class SupportMapsFragment : Fragment(), OnMapReadyCallback {
 
@@ -68,40 +60,12 @@ class SupportMapsFragment : Fragment(), OnMapReadyCallback {
         (childFragmentManager.fragments[0] as SupportMapFragment).getMapAsync(this)
     }
 
-    fun addMarker(location: String, title: String) {
-
-        val queue = Volley.newRequestQueue(context)
-        val apiKey = URLEncoder.encode(getString(R.string.google_maps_geocoding_api_key), "utf-8")
-        val locationEncoded = URLEncoder.encode(location, "utf-8")
-        val addEventUrl =
-            "https://maps.googleapis.com/maps/api/geocode/json?address=$locationEncoded&key=$apiKey"
-
-        val or = JsonObjectRequest(
-            Request.Method.GET, addEventUrl, null,
-            Response.Listener { response ->
-
-                val lat: Double =
-                    (((response["results"] as JSONArray).getJSONObject(0).get("geometry") as JSONObject).get(
-                        "location"
-                    ) as JSONObject).get("lat") as Double
-                val lng: Double =
-                    (((response["results"] as JSONArray).getJSONObject(0).get("geometry") as JSONObject).get(
-                        "location"
-                    ) as JSONObject).get("lng") as Double
-
-                mMap.addMarker(
-                    MarkerOptions()
-                        .position(LatLng(lat, lng))
-                        .title(title)
-                )
-
-            },
-            Response.ErrorListener { error -> Log.e("Tag", "That didnt work $error") })
-
-        // Add the request to the RequestQueue.
-        queue.add(or)
-
-
+    private fun addMarker(lat: Double, lng: Double, title: String) {
+        mMap.addMarker(
+            MarkerOptions()
+                .position(LatLng(lat, lng))
+                .title(title)
+        )
     }
 
     /**
@@ -118,7 +82,16 @@ class SupportMapsFragment : Fragment(), OnMapReadyCallback {
 
         vm.getTodaysEvents(context!!).observe(this, Observer { response ->
             for (i in response) {
-                i["location"]?.let { i["title"]?.let { it1 -> addMarker(it, it1) } }
+                i["latitude"]?.toDouble()?.let {
+                    i["longitude"]?.toDouble()?.let { it1 ->
+                        i["title"]?.let { it2 ->
+                            addMarker(
+                                it,
+                                it1, it2
+                            )
+                        }
+                    }
+                }
 
             }
         })

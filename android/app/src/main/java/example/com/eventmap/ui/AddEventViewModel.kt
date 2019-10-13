@@ -23,7 +23,9 @@ class AddEventViewModel(private val mainRepository: MainRepository) : ViewModel(
         title: String,
         description: String,
         location: String,
-        context: Context
+        context: Context,
+        latitude: Double,
+        longitude: Double
     ): MutableLiveData<Boolean> {
         var startDate = ""
         var endDate = ""
@@ -70,7 +72,16 @@ class AddEventViewModel(private val mainRepository: MainRepository) : ViewModel(
         }
         endDate += endMinute
 
-        return mainRepository.addEvent(title, description, startDate, endDate, location, context)
+        return mainRepository.addEvent(
+            title,
+            description,
+            startDate,
+            endDate,
+            location,
+            context,
+            latitude,
+            longitude
+        )
 
     }
 
