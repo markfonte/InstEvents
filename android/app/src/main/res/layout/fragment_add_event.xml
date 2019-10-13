@@ -168,21 +168,28 @@
                     </com.google.android.material.textfield.TextInputLayout>
 
                     </LinearLayout>
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/enter_event_location_wrapper"
+
+
+                    <Button
+                        android:id="@+id/enter_event_location_button"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_margin="8dp"
+                        android:text="Enter Address"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/end_datetime_wrapper">
+                        app:layout_constraintTop_toBottomOf="@id/end_datetime_wrapper" />
 
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/enter_event_location"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:hint="Location" />
-                    </com.google.android.material.textfield.TextInputLayout>
+                    <TextView
+                        android:id="@+id/current_address"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/enter_event_location_button"
+                        android:text="@{viewModel.address}"
+                        android:textSize="15sp"
+                        android:textAlignment="center"
+                        />
 
                     <ImageView
                         android:id="@+id/new_event_image"
@@ -195,7 +202,7 @@
                         android:visibility="visible"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/enter_event_location_wrapper"/>
+                        app:layout_constraintTop_toBottomOf="@id/current_address"/>
 
                     <Button
                         android:id="@+id/enter_event_choose_picture"
@@ -204,7 +211,7 @@
                         android:text="Choose Picture"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/new_event_image" />
+                        app:layout_constraintTop_toBottomOf="@+id/current_address" />
 
                     <Button
                         android:id="@+id/enter_event_submit"

@@ -27,6 +27,11 @@ import kotlinx.android.synthetic.main.fragment_add_event.*
 import android.app.Activity
 import android.content.Intent
 import android.provider.MediaStore
+import com.google.android.libraries.places.api.Places
+import com.google.android.libraries.places.api.model.Place
+import com.google.android.libraries.places.widget.Autocomplete
+import com.google.android.libraries.places.widget.AutocompleteActivity
+import com.google.android.libraries.places.widget.model.AutocompleteActivityMode
 import example.com.eventmap.data.FirebaseStorageService
 import org.json.JSONArray
 import org.json.JSONObject
@@ -38,6 +43,7 @@ class AddEventFragment : Fragment() {
 
     companion object {
         private final val PICK_IMAGE = 1
+        private final val AUTOCOMPLETE_REQUEST_CODE = 2;
         private final val LOG_TAG = "AddEventFragment"
     }
 
@@ -61,7 +67,18 @@ class AddEventFragment : Fragment() {
             viewModel = vm
             lifecycleOwner = this@AddEventFragment
         }
+
+        Places.initialize(context!!, resources.getString(R.string.google_places_key))
+
         return binding.root
+    }
+
+    private fun openAddressAutocomplete() {
+        val fields = Arrays.asList(Place.Field.ID, Place.Field.NAME, Place.Field.LAT_LNG, Place.Field.ADDRESS)
+        val intent = Autocomplete.IntentBuilder(
+            AutocompleteActivityMode.FULLSCREEN, fields)
+            .build(context!!)
+        startActivityForResult(intent, AUTOCOMPLETE_REQUEST_CODE)
     }
 
 
@@ -191,6 +208,22 @@ class AddEventFragment : Fragment() {
             new_event_image.setImageBitmap(bitmap)
             vm.image = bitmap
         }
+
+        if(requestCode == AUTOCOMPLETE_REQUEST_CODE) {
+            if (resultCode == Activity.RESULT_OK) {
+                val place = Autocomplete.getPlaceFromIntent(data!!)
+                Log.i(LOG_TAG, "Place: " + place.getName() + ", " + place.getId())
+                Log.i(LOG_TAG, "Address: " + place.address)
+                vm.address = place.address!!
+                current_address.text = place.address
+            } else if (resultCode == AutocompleteActivity.RESULT_ERROR) {
+                // TODO: Handle the error.
+                val status = Autocomplete.getStatusFromIntent(data!!)
+                Log.i(LOG_TAG, status.statusMessage.toString())
+            } else if (resultCode == Activity.RESULT_CANCELED) {
+                // The user canceled the operation.
+            }
+        }
     }
 
     private fun pickImage() {
@@ -223,7 +256,7 @@ class AddEventFragment : Fragment() {
         val queue = Volley.newRequestQueue(context)
         val apiKey =
             URLEncoder.encode(getString(R.string.google_maps_geocoding_api_key), "utf-8")
-        val locationEncoded = URLEncoder.encode(enter_event_location.text.toString(), "utf-8")
+        val locationEncoded = URLEncoder.encode(vm.address, "utf-8")
         val addEventUrl =
             "https://maps.googleapis.com/maps/api/geocode/json?address=$locationEncoded&key=$apiKey"
 
@@ -243,7 +276,6 @@ class AddEventFragment : Fragment() {
                 vm.addEvent(
                     enter_event_title.text.toString(),
                     enter_event_description.text.toString(),
-                    enter_event_location.text.toString(),
                     context!!,
                     lat,
                     lng
@@ -279,6 +311,11 @@ class AddEventFragment : Fragment() {
         enter_event_start_time.setOnClickListener {
             showStartTimeDialog()
         }
+
+        enter_event_location_button.setOnClickListener {
+            openAddressAutocomplete()
+        }
+
         enter_event_start_time.setOnFocusChangeListener { _: View, hasFocus: Boolean ->
             if (hasFocus) {
                 showStartTimeDialog()

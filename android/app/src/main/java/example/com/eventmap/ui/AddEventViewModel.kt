@@ -20,13 +20,13 @@ class AddEventViewModel(private val mainRepository: MainRepository) : ViewModel(
     var endYear: Int = 0
     var endMonth: Int = 0
     var endDay: Int = 0
+    var address: String = ""
     var imageName: String = ""
     var image: Bitmap? = null
 
     fun addEvent(
         title: String,
         description: String,
-        location: String,
         context: Context,
         latitude: Double,
         longitude: Double
@@ -81,7 +81,7 @@ class AddEventViewModel(private val mainRepository: MainRepository) : ViewModel(
             description,
             startDate,
             endDate,
-            location,
+            address,
             context,
             latitude,
             longitude,
