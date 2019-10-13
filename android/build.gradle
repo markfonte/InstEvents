@@ -6,10 +6,8 @@ buildscript {
         constraintLayoutVersion = '2.0.0-beta2'
         fabricVersion = '1.29.0'
         firebaseAuthVersion = '19.1.0'
-        firebaseAnalyticsVersion = "17.2.0"
         firebaseCoreVersion = '17.2.0'
         firebaseFirestoreVersion = '21.1.1'
-        firebasePerformanceVersion = '19.0.0'
         firebasePluginsVersion = '1.1.5'
         firebaseUIVersion = '4.1.0'
         glideVersion = '4.9.0'
@@ -29,7 +27,7 @@ buildscript {
     repositories {
         google()
         jcenter()
-        
+
     }
     dependencies {
         classpath "com.android.tools.build:gradle:$gradleVersion"
@@ -44,7 +42,7 @@ allprojects {
     repositories {
         google()
         jcenter()
-        
+
     }
 }
 

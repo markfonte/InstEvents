@@ -1,13 +1,21 @@
 package example.com.eventmap.data
 
+import android.content.Context
 import androidx.lifecycle.MutableLiveData
 
 class MainRepository {
     private var firebaseService: FirebaseService = FirebaseService.getInstance()
     private var volleyService: VolleyService = VolleyService.getInstance()
 
-    fun addEvent(title: String, description: String, startDate: String, endDate:String, location: String) : MutableLiveData<Boolean> {
-        return firebaseService.addEvent(title, description, startDate, endDate, location)
+    fun addEvent(
+        title: String,
+        description: String,
+        startDate: String,
+        endDate: String,
+        location: String,
+        context: Context
+    ): MutableLiveData<Boolean> {
+        return volleyService.addEvent(title, description, startDate, endDate, location, context)
     }
 
     companion object {

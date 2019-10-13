@@ -102,30 +102,13 @@
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/enter_event_end_date_wrapper"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="8dp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/enter_event_start_date_wrapper">
-
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/enter_event_end_date"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:hint="End Date"
-                            android:inputType="time" />
-                    </com.google.android.material.textfield.TextInputLayout>
-
-                    <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/enter_event_start_time_wrapper"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_margin="8dp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/enter_event_end_date_wrapper">
+                        app:layout_constraintTop_toBottomOf="@id/enter_event_start_date_wrapper">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/enter_event_start_time"
@@ -139,13 +122,30 @@
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/enter_event_end_time_wrapper"
+                        android:id="@+id/enter_event_end_date_wrapper"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_margin="8dp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/enter_event_start_time_wrapper">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/enter_event_end_date"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:hint="End Date"
+                            android:inputType="time" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/enter_event_end_time_wrapper"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="8dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/enter_event_end_date_wrapper">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/enter_event_end_time"

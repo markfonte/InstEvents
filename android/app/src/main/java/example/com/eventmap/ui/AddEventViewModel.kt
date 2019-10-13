@@ -1,6 +1,6 @@
 package example.com.eventmap.ui
 
-import android.util.Log
+import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import example.com.eventmap.data.MainRepository
@@ -19,7 +19,12 @@ class AddEventViewModel(private val mainRepository: MainRepository) : ViewModel(
     var endMonth: Int = 0
     var endDay: Int = 0
 
-    fun addEvent(title: String, description: String, location: String) : MutableLiveData<Boolean>{
+    fun addEvent(
+        title: String,
+        description: String,
+        location: String,
+        context: Context
+    ): MutableLiveData<Boolean> {
         var startDate = ""
         var endDate = ""
         startDate += startYear
@@ -65,9 +70,10 @@ class AddEventViewModel(private val mainRepository: MainRepository) : ViewModel(
         }
         endDate += endMinute
 
-        return mainRepository.addEvent(title, description, startDate, endDate, location)
+        return mainRepository.addEvent(title, description, startDate, endDate, location, context)
 
     }
+
     init {
         isPickerLoading.value = false
     }
