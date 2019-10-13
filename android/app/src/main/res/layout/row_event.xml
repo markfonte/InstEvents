@@ -67,13 +67,11 @@
 
         <ImageView
             android:id="@+id/event_image"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
             android:adjustViewBounds="true"
-            android:maxWidth="160dp"
-            android:maxHeight="160dp"
-            android:scaleType="centerCrop"
+            android:maxHeight="300dp"
             android:visibility="visible"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

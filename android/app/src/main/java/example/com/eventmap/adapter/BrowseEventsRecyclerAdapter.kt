@@ -46,7 +46,7 @@ class BrowseEventsRecyclerAdapter(private val eventInfos: ArrayList<EventInfo>, 
         holder.title.text = eventInfos[position].Title
         holder.description.text = eventInfos[position].Description
         holder.location.text = eventInfos[position].Location
-        holder.dates.text = eventInfos[position].StartDate +  " - "  + eventInfos[position].EndDate
+        holder.dates.text = eventInfos[position].StartDate?.substring(0, 10)  + " @ " + eventInfos[position].StartDate?.substring(11, 16) +  " - "  + eventInfos[position].EndDate?.substring(0, 10) + " @ " + eventInfos[position].EndDate?.substring(11, 16)
 
         if (eventInfos[position].ImageURL != "") {
             Glide.with(activity)
