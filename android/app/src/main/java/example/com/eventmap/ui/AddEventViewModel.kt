@@ -20,6 +20,7 @@ class AddEventViewModel(private val mainRepository: MainRepository) : ViewModel(
     var endYear: Int = 0
     var endMonth: Int = 0
     var endDay: Int = 0
+    var imageName: String? = ""
     var image: Bitmap? = null
 
     fun addEvent(
