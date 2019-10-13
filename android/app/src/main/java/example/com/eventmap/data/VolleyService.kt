@@ -25,7 +25,8 @@ class VolleyService {
         location: String,
         context: Context,
         latitude: Double,
-        longitude: Double
+        longitude: Double,
+        imageUrl: String
     ): MutableLiveData<Boolean> {
         val result: MutableLiveData<Boolean> = MutableLiveData()
 
@@ -43,7 +44,7 @@ class VolleyService {
                     eventInfoMap["description"] = description
                     eventInfoMap["location"] = location
                     eventInfoMap["title"] = title
-                    eventInfoMap["image_url"] = ""
+                    eventInfoMap["image_url"] = imageUrl
                     eventInfoMap["latitude"] = latitude.toString()
                     eventInfoMap["longitude"] = longitude.toString()
                     return eventInfoMap

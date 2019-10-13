@@ -1,5 +1,6 @@
 package example.com.eventmap.adapter
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,6 +17,7 @@ class BrowseEventsRecyclerAdapter(private val eventInfos: ArrayList<EventInfo>) 
         val title: TextView = v.findViewById(R.id.event_title)
         val description: TextView = v.findViewById(R.id.event_description)
         val location: TextView = v.findViewById(R.id.event_location)
+        val dates: TextView = v.findViewById(R.id.event_dates)
         val rowContainer: ConstraintLayout = v.findViewById(R.id.event_row_container)
     }
 
@@ -35,10 +37,12 @@ class BrowseEventsRecyclerAdapter(private val eventInfos: ArrayList<EventInfo>) 
     override fun getItemCount(): Int = eventInfos.size
 
 
+    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.title.text = eventInfos[position].Title
         holder.description.text = eventInfos[position].Description
         holder.location.text = eventInfos[position].Location
+        holder.dates.text = eventInfos[position].StartDate +  " - "  + eventInfos[position].EndDate
         holder.rowContainer.setOnClickListener {
             // TODO: Do something if event is clicked
         }
