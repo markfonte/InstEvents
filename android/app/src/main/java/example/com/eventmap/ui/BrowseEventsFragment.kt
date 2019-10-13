@@ -6,9 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import example.com.eventmap.R
 import example.com.eventmap.databinding.FragmentBrowseEventsBinding
+import example.com.eventmap.util.EventInfo
 import example.com.eventmap.util.InjectorUtils
 
 class BrowseEventsFragment : Fragment() {
@@ -32,5 +34,31 @@ class BrowseEventsFragment : Fragment() {
             lifecycleOwner = this@BrowseEventsFragment
         }
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        buildBrowseEventsView()
+    }
+
+    private fun buildBrowseEventsView() {
+        vm.getAllEvents(context!!).observe(this, Observer { events ->
+            val eventInfos : ArrayList<EventInfo> = arrayListOf()
+
+            for (event in events) {
+                val curEventInfo = EventInfo("", "", "", "", "", "", "", "")
+                curEventInfo.Title = event["title"]
+                curEventInfo.Description = event["description"]
+                curEventInfo.StartDate = event["start_date"]
+                curEventInfo.EndDate = event["end_date"]
+                curEventInfo.ImageURL = event["image_url"]
+                curEventInfo.Location = event["location"]
+                curEventInfo.Latitude = event["latitude"]
+                curEventInfo.Longitude = event["longitude"]
+                eventInfos.add(curEventInfo)
+            }
+
+            // set up recyclerview
+        })
     }
 }

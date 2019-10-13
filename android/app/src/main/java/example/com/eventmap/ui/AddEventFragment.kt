@@ -4,6 +4,7 @@ import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,6 +13,10 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import com.android.volley.Request
+import com.android.volley.Response
+import com.android.volley.toolbox.JsonObjectRequest
+import com.android.volley.toolbox.Volley
 import com.google.android.material.snackbar.Snackbar
 import example.com.eventmap.MapsActivity
 import example.com.eventmap.R
@@ -21,14 +26,11 @@ import kotlinx.android.synthetic.main.activity_maps.*
 import kotlinx.android.synthetic.main.fragment_add_event.*
 import android.app.Activity
 import android.content.Intent
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.provider.MediaStore
-import android.util.Log
 import example.com.eventmap.data.FirebaseStorageService
-import java.io.ByteArrayOutputStream
-import androidx.core.app.ActivityCompat.startActivityForResult
-import example.com.eventmap.R.id
+import org.json.JSONArray
+import org.json.JSONObject
+import java.net.URLEncoder
 
 
 class AddEventFragment : Fragment() {
@@ -86,7 +88,7 @@ class AddEventFragment : Fragment() {
                     enter_event_start_time.setText("$hourOutput:$minuteOutput $suffix")
                 }
             },
-            0,
+            12,
             0,
             false
         )
@@ -120,7 +122,7 @@ class AddEventFragment : Fragment() {
                     enter_event_end_time.setText("$hourOutput:$minuteOutput $suffix")
                 }
             },
-            0,
+            12,
             0,
             false
         )
@@ -200,7 +202,7 @@ class AddEventFragment : Fragment() {
     }
 
     private fun submit() {
-        if(vm.image != null) {
+        if (vm.image != null) {
             firebaseStorage.uploadImage(vm.image!!).addOnSuccessListener {
                 sendData()
             }.addOnFailureListener {
@@ -212,26 +214,55 @@ class AddEventFragment : Fragment() {
     }
 
     private fun sendData() {
-        vm.addEvent(
-            enter_event_title.text.toString(),
-            enter_event_description.text.toString(),
-            enter_event_location.text.toString(),
-            context!!
-        ).observe(this, Observer { success ->
-            if (success) {
-                main_nav_host_fragment.view?.let { it1 ->
-                    Snackbar.make(
-                        it1,
-                        "Event created! Check it out on the map or in Browse.",
-                        Snackbar.LENGTH_LONG
-                    ).show()
-                }
-                (activity as MapsActivity).navController.navigate(
-                    R.id.action_addEventFragment_to_supportMapsFragment,
-                    null
-                )
-            }
-        })
+        val queue = Volley.newRequestQueue(context)
+        val apiKey =
+            URLEncoder.encode(getString(R.string.google_maps_geocoding_api_key), "utf-8")
+        val locationEncoded = URLEncoder.encode(enter_event_location.text.toString(), "utf-8")
+        val addEventUrl =
+            "https://maps.googleapis.com/maps/api/geocode/json?address=$locationEncoded&key=$apiKey"
+
+        val request = JsonObjectRequest(
+            Request.Method.GET, addEventUrl, null,
+            Response.Listener { response ->
+
+                val lat: Double =
+                    (((response["results"] as JSONArray).getJSONObject(0).get("geometry") as JSONObject).get(
+                        "location"
+                    ) as JSONObject).get("lat") as Double
+                val lng: Double =
+                    (((response["results"] as JSONArray).getJSONObject(0).get("geometry") as JSONObject).get(
+                        "location"
+                    ) as JSONObject).get("lng") as Double
+
+
+                vm.addEvent(
+                    enter_event_title.text.toString(),
+                    enter_event_description.text.toString(),
+                    enter_event_location.text.toString(),
+                    context!!,
+                    lat,
+                    lng
+                ).observe(this, Observer { success ->
+                    if (success) {
+                        main_nav_host_fragment.view?.let { it1 ->
+                            Snackbar.make(
+                                it1,
+                                "Event created! Check it out on the map or in Browse.",
+                                Snackbar.LENGTH_LONG
+                            ).show()
+                        }
+                        (activity as MapsActivity).navController.navigate(
+                            R.id.action_addEventFragment_to_supportMapsFragment,
+                            null
+                        )
+                    }
+                })
+
+            },
+            Response.ErrorListener { error -> Log.e("Tag", "That didnt work $error") })
+
+        // Add the request to the RequestQueue.
+        queue.add(request)
     }
 
     @RequiresApi(Build.VERSION_CODES.N)

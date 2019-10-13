@@ -6,13 +6,13 @@ import androidx.lifecycle.MutableLiveData
 import com.android.volley.AuthFailureError
 import com.android.volley.Request
 import com.android.volley.Response
-import com.android.volley.toolbox.JsonArrayRequest
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
-import com.google.gson.Gson
-import com.google.protobuf.Parser
 import org.json.JSONObject
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.HashMap
 
 
 class VolleyService {
@@ -23,7 +23,9 @@ class VolleyService {
         startDate: String,
         endDate: String,
         location: String,
-        context: Context
+        context: Context,
+        latitude: Double,
+        longitude: Double
     ): MutableLiveData<Boolean> {
         val result: MutableLiveData<Boolean> = MutableLiveData()
 
@@ -42,6 +44,8 @@ class VolleyService {
                     eventInfoMap["location"] = location
                     eventInfoMap["title"] = title
                     eventInfoMap["image_url"] = ""
+                    eventInfoMap["latitude"] = latitude.toString()
+                    eventInfoMap["longitude"] = longitude.toString()
                     return eventInfoMap
                 }
 
@@ -59,31 +63,39 @@ class VolleyService {
         return result
     }
 
-    fun getTodaysEvents(context: Context): MutableLiveData<ArrayList<HashMap<String, String>>> {
+    fun getEvents(
+        context: Context,
+        today: Boolean
+    ): MutableLiveData<ArrayList<HashMap<String, String>>> {
         val result: MutableLiveData<ArrayList<HashMap<String, String>>> = MutableLiveData()
 
         val queue = Volley.newRequestQueue(context)
-        val startDate = "2019-10-15-00-00"
-        val endDate = "2019-10-17-23-59"
+        val sdf = SimpleDateFormat("yyyy-MM-dd-HH-mm", Locale.getDefault())
+        val startDate = sdf.format(Date())
 
-        val addEventUrl = "https://us-central1-infinite-chain-255705.cloudfunctions.net/api/events?start_date=$startDate&end_date=$endDate"
-        val events : ArrayList<HashMap<String, String>> = arrayListOf()
+        val endDate = if (today) startDate.substring(0, 10) + "-23-59" else "2050-06-15-13-04"
+
+        val addEventUrl =
+            "https://us-central1-infinite-chain-255705.cloudfunctions.net/api/events?start_date=$startDate&end_date=$endDate"
+        val events: ArrayList<HashMap<String, String>> = arrayListOf()
         val or = JsonObjectRequest(Request.Method.GET, addEventUrl, null,
-                Response.Listener {response ->
-                    Log.d(LOG_TAG, "Response: %s".format(response.toString()))
-                    for (i in response.keys()) {
-                        val event : HashMap<String, String> = HashMap()
-                        event["start_date"] = (response[i] as JSONObject)["start_date"].toString()
-                        event["end_date"] = (response[i] as JSONObject)["end_date"].toString()
-                        event["location"] = (response[i] as JSONObject)["location"].toString()
-                        event["title"] = (response[i] as JSONObject)["title"].toString()
-                        event["image_url"] = (response[i] as JSONObject)["image_url"].toString()
-                        event["description"] = (response[i] as JSONObject)["description"].toString()
-                        events.add(event)
-                    }
-                    result.value = events
-                },
-                Response.ErrorListener { error -> Log.e("Tag", "That didnt work $error") })
+            Response.Listener { response ->
+                Log.d(LOG_TAG, "Response: %s".format(response.toString()))
+                for (i in response.keys()) {
+                    val event: HashMap<String, String> = HashMap()
+                    event["start_date"] = (response[i] as JSONObject)["start_date"].toString()
+                    event["end_date"] = (response[i] as JSONObject)["end_date"].toString()
+                    event["location"] = (response[i] as JSONObject)["location"].toString()
+                    event["title"] = (response[i] as JSONObject)["title"].toString()
+                    event["image_url"] = (response[i] as JSONObject)["image_url"].toString()
+                    event["description"] = (response[i] as JSONObject)["description"].toString()
+                    event["latitude"] = (response[i] as JSONObject)["latitude"].toString()
+                    event["longitude"] = (response[i] as JSONObject)["longitude"].toString()
+                    events.add(event)
+                }
+                result.value = events
+            },
+            Response.ErrorListener { error -> Log.e("Tag", "That didnt work $error") })
 
         // Add the request to the RequestQueue.
         queue.add(or)

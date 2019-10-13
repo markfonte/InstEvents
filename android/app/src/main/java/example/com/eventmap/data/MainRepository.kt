@@ -13,13 +13,27 @@ class MainRepository {
         startDate: String,
         endDate: String,
         location: String,
-        context: Context
+        context: Context,
+        latitude: Double,
+        longitude: Double
     ): MutableLiveData<Boolean> {
-        return volleyService.addEvent(title, description, startDate, endDate, location, context)
+        return volleyService.addEvent(
+            title,
+            description,
+            startDate,
+            endDate,
+            location,
+            context,
+            latitude,
+            longitude
+        )
     }
 
-    fun getTodaysEvents(context: Context) : MutableLiveData<ArrayList<HashMap<String, String>>> {
-        return volleyService.getTodaysEvents(context)
+    fun getEvents(
+        context: Context,
+        today: Boolean
+    ): MutableLiveData<ArrayList<HashMap<String, String>>> {
+        return volleyService.getEvents(context, today)
     }
 
     companion object {
