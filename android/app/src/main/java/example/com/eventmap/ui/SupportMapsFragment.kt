@@ -134,7 +134,7 @@ class SupportMapsFragment : Fragment(), OnMapReadyCallback {
 
                 // Got last known location. In some rare situations this can be null.
                 val curLocation = location?.latitude?.let { LatLng(it, location.longitude) }
-                mMap.moveCamera(CameraUpdateFactory.newLatLng(curLocation))
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(curLocation, 14.6f))
             }
     }
 
