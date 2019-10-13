@@ -205,6 +205,7 @@ class AddEventFragment : Fragment() {
         if (vm.image != null) {
             firebaseStorage.uploadImage(vm.image!!).addOnSuccessListener {
                 sendData()
+
             }.addOnFailureListener {
                 Log.e(LOG_TAG, "Unable to upload image!")
             }
@@ -234,7 +235,6 @@ class AddEventFragment : Fragment() {
                         "location"
                     ) as JSONObject).get("lng") as Double
 
-
                 vm.addEvent(
                     enter_event_title.text.toString(),
                     enter_event_description.text.toString(),
@@ -252,11 +252,13 @@ class AddEventFragment : Fragment() {
                                 Snackbar.LENGTH_LONG
                             ).show()
                         }
+                        vm.isPickerLoading.value = false
                         (activity as MapsActivity).navController.navigate(
                             R.id.action_addEventFragment_to_supportMapsFragment,
                             null
                         )
                     }
+                    vm.isPickerLoading.value = false
                 })
 
             },
@@ -303,6 +305,7 @@ class AddEventFragment : Fragment() {
             }
         }
         enter_event_submit.setOnClickListener {
+            vm.isPickerLoading.value = true
             submit()
         }
 
