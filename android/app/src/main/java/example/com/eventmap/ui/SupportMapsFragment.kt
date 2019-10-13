@@ -100,7 +100,7 @@ class SupportMapsFragment : Fragment(), OnMapReadyCallback {
 
         if (ContextCompat.checkSelfPermission(
                 context!!,
-                Manifest.permission.ACCESS_COARSE_LOCATION
+                Manifest.permission.ACCESS_FINE_LOCATION
             )
             != PackageManager.PERMISSION_GRANTED
         ) {
@@ -109,7 +109,7 @@ class SupportMapsFragment : Fragment(), OnMapReadyCallback {
             // Should we show an explanation?
             if (ActivityCompat.shouldShowRequestPermissionRationale(
                     activity!!,
-                    Manifest.permission.ACCESS_COARSE_LOCATION
+                    Manifest.permission.ACCESS_FINE_LOCATION
                 )
             ) {
                 // Show an explanation to the user *asynchronously* -- don't block
@@ -119,7 +119,7 @@ class SupportMapsFragment : Fragment(), OnMapReadyCallback {
                 // No explanation needed, we can request the permission.
                 ActivityCompat.requestPermissions(
                     activity!!,
-                    arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION),
+                    arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
                     1
                 )
                 // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
