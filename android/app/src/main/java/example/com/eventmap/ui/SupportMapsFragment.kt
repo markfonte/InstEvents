@@ -60,11 +60,12 @@ class SupportMapsFragment : Fragment(), OnMapReadyCallback {
         (childFragmentManager.fragments[0] as SupportMapFragment).getMapAsync(this)
     }
 
-    private fun addMarker(lat: Double, lng: Double, title: String) {
+    private fun addMarker(lat: Double, lng: Double, title: String, description: String) {
         mMap.addMarker(
             MarkerOptions()
                 .position(LatLng(lat, lng))
                 .title(title)
+                .snippet(description)
         )
     }
 
@@ -85,10 +86,12 @@ class SupportMapsFragment : Fragment(), OnMapReadyCallback {
                 i["latitude"]?.toDouble()?.let {
                     i["longitude"]?.toDouble()?.let { it1 ->
                         i["title"]?.let { it2 ->
-                            addMarker(
-                                it,
-                                it1, it2
-                            )
+                            i["description"]?.let { it3 ->
+                                addMarker(
+                                    it,
+                                    it1, it2, it3
+                                )
+                            }
                         }
                     }
                 }
