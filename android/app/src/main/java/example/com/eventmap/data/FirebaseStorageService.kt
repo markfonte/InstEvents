@@ -23,8 +23,6 @@ class FirebaseStorageService {
     private val storage = FirebaseStorage.getInstance()
     private val storageRef = storage.reference
 
-    private val imageRef = storageRef.child("event-images/" + UUID.randomUUID().toString() + ".png")
-
     fun uploadImage(path: String, data: ByteArray): UploadTask {
         return storageRef.child(path).putBytes(data)
     }
