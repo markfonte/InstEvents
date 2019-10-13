@@ -25,14 +25,14 @@ class FirebaseStorageService {
 
     private val imageRef = storageRef.child("event-images/" + UUID.randomUUID().toString() + ".png")
 
-    fun uploadImage(data: ByteArray): UploadTask {
-        return imageRef.putBytes(data)
+    fun uploadImage(path: String, data: ByteArray): UploadTask {
+        return storageRef.child(path).putBytes(data)
     }
 
-    fun uploadImage(bitmap: Bitmap): UploadTask {
+    fun uploadImage(path: String, bitmap: Bitmap): UploadTask {
         val baos = ByteArrayOutputStream()
         bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos)
         val data = baos.toByteArray()
-        return uploadImage(data)
+        return uploadImage(path, data)
     }
 }

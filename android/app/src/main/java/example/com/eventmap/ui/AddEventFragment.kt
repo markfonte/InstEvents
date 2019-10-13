@@ -31,6 +31,7 @@ import example.com.eventmap.data.FirebaseStorageService
 import org.json.JSONArray
 import org.json.JSONObject
 import java.net.URLEncoder
+import java.util.*
 
 
 class AddEventFragment : Fragment() {
@@ -203,7 +204,9 @@ class AddEventFragment : Fragment() {
 
     private fun submit() {
         if (vm.image != null) {
-            firebaseStorage.uploadImage(vm.image!!).addOnSuccessListener {
+            vm.imageName = UUID.randomUUID().toString() + ".png"
+            val path = "event-images/" + vm.imageName
+            firebaseStorage.uploadImage(path, vm.image!!).addOnSuccessListener {
                 sendData()
             }.addOnFailureListener {
                 Log.e(LOG_TAG, "Unable to upload image!")
