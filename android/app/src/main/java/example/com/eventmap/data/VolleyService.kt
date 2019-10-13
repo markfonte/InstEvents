@@ -12,7 +12,6 @@ import com.android.volley.toolbox.Volley
 import org.json.JSONObject
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
 
 
@@ -64,13 +63,17 @@ class VolleyService {
         return result
     }
 
-    fun getTodaysEvents(context: Context): MutableLiveData<ArrayList<HashMap<String, String>>> {
+    fun getEvents(
+        context: Context,
+        today: Boolean
+    ): MutableLiveData<ArrayList<HashMap<String, String>>> {
         val result: MutableLiveData<ArrayList<HashMap<String, String>>> = MutableLiveData()
 
         val queue = Volley.newRequestQueue(context)
         val sdf = SimpleDateFormat("yyyy-MM-dd-HH-mm", Locale.getDefault())
         val startDate = sdf.format(Date())
-        val endDate = startDate.substring(0, 10) + "-23-59"
+
+        val endDate = if (today) startDate.substring(0, 10) + "-23-59" else "2050-06-15-13-04"
 
         val addEventUrl =
             "https://us-central1-infinite-chain-255705.cloudfunctions.net/api/events?start_date=$startDate&end_date=$endDate"

@@ -29,8 +29,11 @@ class MainRepository {
         )
     }
 
-    fun getTodaysEvents(context: Context): MutableLiveData<ArrayList<HashMap<String, String>>> {
-        return volleyService.getTodaysEvents(context)
+    fun getEvents(
+        context: Context,
+        today: Boolean
+    ): MutableLiveData<ArrayList<HashMap<String, String>>> {
+        return volleyService.getEvents(context, today)
     }
 
     companion object {

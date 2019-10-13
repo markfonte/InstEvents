@@ -81,7 +81,7 @@ class SupportMapsFragment : Fragment(), OnMapReadyCallback {
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
 
-        vm.getTodaysEvents(context!!).observe(this, Observer { response ->
+        vm.getEventsToday(context!!).observe(this, Observer { response ->
             for (i in response) {
                 i["latitude"]?.toDouble()?.let {
                     i["longitude"]?.toDouble()?.let { it1 ->

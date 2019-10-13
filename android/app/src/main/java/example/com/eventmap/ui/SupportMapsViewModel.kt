@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import example.com.eventmap.data.MainRepository
 
 class SupportMapsViewModel(private val mainRepository: MainRepository) : ViewModel() {
-    fun getTodaysEvents(context: Context) : MutableLiveData<ArrayList<HashMap<String, String>>> {
-        return mainRepository.getTodaysEvents(context)
+    fun getEventsToday(context: Context): MutableLiveData<ArrayList<HashMap<String, String>>> {
+        return mainRepository.getEvents(context, today = true)
     }
 }
