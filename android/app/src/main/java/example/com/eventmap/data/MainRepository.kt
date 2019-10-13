@@ -15,7 +15,8 @@ class MainRepository {
         location: String,
         context: Context,
         latitude: Double,
-        longitude: Double
+        longitude: Double,
+        imageUrl: String
     ): MutableLiveData<Boolean> {
         return volleyService.addEvent(
             title,
@@ -25,7 +26,8 @@ class MainRepository {
             location,
             context,
             latitude,
-            longitude
+            longitude,
+            imageUrl
         )
     }
 
