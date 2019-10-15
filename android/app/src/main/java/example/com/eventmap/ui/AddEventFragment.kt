@@ -1,9 +1,12 @@
 package example.com.eventmap.ui
 
+import android.app.Activity
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.provider.MediaStore
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -17,22 +20,19 @@ import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
-import com.google.android.material.snackbar.Snackbar
-import example.com.eventmap.MapsActivity
-import example.com.eventmap.R
-import example.com.eventmap.databinding.FragmentAddEventBinding
-import example.com.eventmap.util.InjectorUtils
-import kotlinx.android.synthetic.main.activity_maps.*
-import kotlinx.android.synthetic.main.fragment_add_event.*
-import android.app.Activity
-import android.content.Intent
-import android.provider.MediaStore
 import com.google.android.libraries.places.api.Places
 import com.google.android.libraries.places.api.model.Place
 import com.google.android.libraries.places.widget.Autocomplete
 import com.google.android.libraries.places.widget.AutocompleteActivity
 import com.google.android.libraries.places.widget.model.AutocompleteActivityMode
+import com.google.android.material.snackbar.Snackbar
+import example.com.eventmap.MapsActivity
+import example.com.eventmap.R
 import example.com.eventmap.data.FirebaseStorageService
+import example.com.eventmap.databinding.FragmentAddEventBinding
+import example.com.eventmap.util.InjectorUtils
+import kotlinx.android.synthetic.main.activity_maps.*
+import kotlinx.android.synthetic.main.fragment_add_event.*
 import org.json.JSONArray
 import org.json.JSONObject
 import java.net.URLEncoder
@@ -74,9 +74,15 @@ class AddEventFragment : Fragment() {
     }
 
     private fun openAddressAutocomplete() {
-        val fields = Arrays.asList(Place.Field.ID, Place.Field.NAME, Place.Field.LAT_LNG, Place.Field.ADDRESS)
+        val fields = Arrays.asList(
+            Place.Field.ID,
+            Place.Field.NAME,
+            Place.Field.LAT_LNG,
+            Place.Field.ADDRESS
+        )
         val intent = Autocomplete.IntentBuilder(
-            AutocompleteActivityMode.FULLSCREEN, fields)
+            AutocompleteActivityMode.FULLSCREEN, fields
+        )
             .build(context!!)
         startActivityForResult(intent, AUTOCOMPLETE_REQUEST_CODE)
     }
@@ -209,7 +215,7 @@ class AddEventFragment : Fragment() {
             vm.image = bitmap
         }
 
-        if(requestCode == AUTOCOMPLETE_REQUEST_CODE) {
+        if (requestCode == AUTOCOMPLETE_REQUEST_CODE) {
             if (resultCode == Activity.RESULT_OK) {
                 val place = Autocomplete.getPlaceFromIntent(data!!)
                 Log.i(LOG_TAG, "Place: " + place.getName() + ", " + place.getId())
