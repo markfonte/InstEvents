@@ -2,18 +2,6 @@
 
 InstEvents is the quickest and most seamless way to view current and upcoming events in you area. Download our android application today to browse events on our embedded Google Map or view more details in our Browse section. Add an event yourself with our smooth interface featuring date/time pickers, location autocomplete and cover photo uploads. Stay tuned for more updates!
 
-## Future Plans
-
-* Release to Google Play Store
-* Scrape the web for popular public events in your area
-* Tabs to change days on embedded map view
-* More robust event info window on embedded map view
-* And more!
-
-## Installing
-
-Right now, installation requires our private Google Maps API keys. Message us at contact.mfonte@gmail.com if you want to install it yourself!
-
 ## Built With
 
 * [Google Maps SDK For Android](https://developers.google.com/maps/documentation/android-sdk/intro) - Embedded map view
@@ -26,6 +14,17 @@ Right now, installation requires our private Google Maps API keys. Message us at
 * [Android Volley](https://github.com/google/volley) - Sends HTTP requests to server
 * [BumpTech Glide](https://github.com/bumptech/glide) - Loads and caches images in Android application
 
+## Future Plans
+
+* Release to Google Play Store
+* Scrape the web for popular public events in your area
+* Tabs to change days on embedded map view
+* More robust event info window on embedded map view
+* And more!
+
+## Installing
+
+Right now, installation requires our private Google Maps API keys. Message us at contact.mfonte@gmail.com if you want to install it yourself!
 
 ## Contributing
 
@@ -40,4 +39,4 @@ See also the list of [contributors](https://github.com/markfonte/InstEvents/cont
 
 ## Acknowledgments
 
-* [MHacks 12](https://mhacks.org)
+* [MHacks 12](https://mhacks.org), where we began this project! Thank you!
