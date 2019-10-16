@@ -1,6 +1,8 @@
 # InstEvents
 
-InstEvents is the quickest and most seamless way to view current and upcoming events in you area. Download our android application today to browse events on our embedded Google Map or view more details in our Browse section. Add an event yourself with our smooth interface featuring date/time pickers, location autocomplete and cover photo uploads. Stay tuned for more updates!
+InstEvents is the quickest and most seamless way to view current and upcoming events in you area. Download our android application today to browse events on our embedded Google Map or view more details in our Browse section. Add an event yourself with our smooth interface featuring date/time pickers, location autocomplete and cover photo uploads. No login required. Stay tuned for more updates!
+
+<img src="https://firebasestorage.googleapis.com/v0/b/infinite-chain-255705.appspot.com/o/example_screenshots%2Fexample_01.jpg?alt=media&token=81bdb20f-b71b-4d5c-b3b6-632e5a28a5a4" alt="Browse Events" width="280" > <img src="https://firebasestorage.googleapis.com/v0/b/infinite-chain-255705.appspot.com/o/example_screenshots%2Fexample_02.jpg?alt=media&token=55bd7513-966c-467b-bd07-63d5a9b634d0" alt="Add Event Time Picker" width="280" > <img src="https://firebasestorage.googleapis.com/v0/b/infinite-chain-255705.appspot.com/o/example_screenshots%2Fexample_03.jpg?alt=media&token=fa203ce9-9d53-4afe-8f92-f961d49b61e2" alt="Google Places API" width="280" > <img src="https://firebasestorage.googleapis.com/v0/b/infinite-chain-255705.appspot.com/o/example_screenshots%2Fexample_04.jpg?alt=media&token=50996ab1-eaa0-40c9-bb07-3fede8498159" alt="Add Event" width="280" > <img src="https://firebasestorage.googleapis.com/v0/b/infinite-chain-255705.appspot.com/o/example_screenshots%2Fexample_05.jpg?alt=media&token=1d2d0c32-f7e3-47e9-84ef-8bc7aea538b4" alt="Embedded Map View" width="280" >
 
 ## Built With
 
@@ -13,6 +15,7 @@ InstEvents is the quickest and most seamless way to view current and upcoming ev
 * [Firebase Firestore](https://firebase.google.com/docs/firestore/) - NoSQL storage of event information
 * [Android Volley](https://github.com/google/volley) - Sends HTTP requests to server
 * [BumpTech Glide](https://github.com/bumptech/glide) - Loads and caches images in Android application
+
 
 ## Future Plans
 
