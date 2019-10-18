@@ -25,13 +25,34 @@ InstEvents is the quickest and most seamless way to view current and upcoming ev
 * More robust event info window on embedded map view
 * And more!
 
-## Installing
+## Installation / Development Set Up
 
-Right now, installation requires our private Google Maps API keys. Message us at contact.mfonte@gmail.com if you want to install it yourself!
+    git clone https://github.com/markfonte/InstEvents/
+    cd InstEvents
+
+### Android
+
+First, copy over the sample api keys file to the real file name.
+
+    cp android/app/src/main/res/values/SAMPLE_google_maps_api.xml android/app/src/main/res/values/google_maps_api.xml
+
+Fill out the google_maps_api.xml with keys from your own GCP account (instructions for this coming soon). Each of the keys need access to the respective service.
+
+Open the "InstEvents/android" folder in Android Studio. Then you can build the app, and install it on your phone or run it in an emulator.
+
+### Backend (Cloud Functions)
+
+(How to deploy to your own GCP account.)
+
+Coming soon.
 
 ## Contributing
 
-Please [contact us](mailto:contact.mfonte@gmail.com) if you would like to contribute to this project!
+Fork the repository, and follow the installation guide above.
+
+Make improvements, etc. and then create a pull request on this repo's master branch with your proposed changes. We'll discuss and review the code, give feedback, etc. Then, if we approve the changes and Travis CI passes the pull request, we'll merge it!
+
+More detailed instructions coming soon.
 
 ## Authors
 
